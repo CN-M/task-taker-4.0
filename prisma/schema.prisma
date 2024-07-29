@@ -1,0 +1,39 @@
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id
+  email String @unique
+  firstName String 
+  lastName String 
+  password String
+  task Task[]
+  sessions Session[]
+}
+
+model Session {
+  id String @id
+  userId String
+  expiresAt DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Task {
+  id String @id @default(uuid())
+  content String
+  completed Boolean @default(false)
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+  createdAt DateTime @default(now())
+}
