@@ -1,10 +1,8 @@
 "use server";
 
+import { hash } from "@node-rs/argon2";
 import { PrismaClient } from "@prisma/client";
 import { generateIdFromEntropySize } from "lucia";
-import { Argon2id } from "oslo/password";
-
-const argon2id = new Argon2id();
 
 const batTasks = [
   "Check Bat-Signal Bulb",
@@ -46,9 +44,9 @@ const getRandomBoolean = () => {
 const prisma = new PrismaClient();
 
 export const seedGuestAccounts = async () => {
-  const hashedBatmanPassword = await argon2id.hash("SUPERMAN-SUCKZ");
-  const hashedSupermanPassword = await argon2id.hash("LoisLane123");
-  const hashedWonderWomanPassword = await argon2id.hash("SUPERMAN-SUCKZ");
+  const hashedBatmanPassword = await hash("SUPERMAN-SUCKZ");
+  const hashedSupermanPassword = await hash("LoisLane123");
+  const hashedWonderWomanPassword = await hash("SUPERMAN-SUCKZ");
 
   // Create Batman guest account
   await prisma.user.create({

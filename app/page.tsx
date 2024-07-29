@@ -1,4 +1,4 @@
-import { AddTaskForm } from "@/components/forms/addTaskForm";
+import { AddTaskForm } from "@/components/addTaskForm";
 import { Task } from "@/components/task";
 import { validateRequest } from "@/lib/validate-request";
 import { redirect } from "next/navigation";

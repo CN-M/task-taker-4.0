@@ -3,13 +3,11 @@
 import { lucia } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { validateRequest } from "@/lib/validate-request";
+import { hash, verify } from "@node-rs/argon2";
 import { generateIdFromEntropySize } from "lucia";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { Argon2id } from "oslo/password";
 import { z } from "zod";
-
-const argon2id = new Argon2id();
 
 const registerSchema = z.object({
   email: z
@@ -42,6 +40,24 @@ const loginSchema = z.object({
     .min(6, { message: "Password must be at least 6 characters long" })
     .max(255, { message: "Password must be at most 255 characters long" }),
 });
+
+const guestAccounts = [
+  {
+    firstName: "Batman",
+    email: "bruce.wayne@wayneenterprises.com",
+    password: "SUPERMAN-SUCKZ",
+  },
+  {
+    firstName: "Superman",
+    email: "clark.kent@dailyplanet.com",
+    password: "LoisLane123",
+  },
+  {
+    firstName: "Wonderwoman",
+    email: "diana.prince@themyscira.gov",
+    password: "SUPERMAN-SUCKZ",
+  },
+];
 
 export const login = async (
   prevState: {
@@ -88,10 +104,7 @@ export const login = async (
       };
     }
 
-    const validPassword = await argon2id.verify(
-      existingUser.password,
-      password
-    );
+    const validPassword = await verify(existingUser.password, password);
 
     if (!validPassword) {
       return {
@@ -163,7 +176,7 @@ export const register = async (
       };
     }
 
-    const hashedPassword = await argon2id.hash(password);
+    const hashedPassword = await hash(password);
 
     const userId = generateIdFromEntropySize(10); // 16 characters long
 
@@ -189,7 +202,7 @@ export const register = async (
   }
 };
 
-export const loginAsGuest = async (
+export const loginAsGuests = async (
   prevState: {
     message?: string;
     error?: {
@@ -253,10 +266,7 @@ export const loginAsGuest = async (
       };
     }
 
-    const validPassword = await argon2id.verify(
-      existingUser.password,
-      password
-    );
+    const validPassword = await verify(existingUser.password, password);
 
     if (!validPassword) {
       return {
@@ -281,6 +291,68 @@ export const loginAsGuest = async (
     return redirect("/");
   }
 };
+
+export const loginAsGuest = async () => {
+  const randomGuest = Math.floor(Math.random() * guestAccounts.length);
+
+  const { email, password } = guestAccounts[randomGuest];
+
+  const result = loginSchema.safeParse({ email, password });
+
+  if (!result.success) {
+    console.log(result.error.errors);
+    return {
+      error: result.error.errors.map((error) => ({
+        path: error.path.join("."),
+        message: error.message,
+      })),
+      message: "Error",
+    };
+  } else {
+    const { email, password } = result.data;
+
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (!existingUser) {
+      return {
+        error: [
+          {
+            path: "main",
+            message: "Account does not exist",
+          },
+        ],
+        message: "Error",
+      };
+    }
+
+    const validPassword = await verify(existingUser.password, password);
+
+    if (!validPassword) {
+      return {
+        error: [
+          {
+            path: "password",
+            message: "Incorrect username or password",
+          },
+        ],
+      };
+    }
+
+    const session = await lucia.createSession(existingUser.id, {});
+    const sessionCookie = lucia.createSessionCookie(session.id);
+    cookies().set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes
+    );
+    return redirect("/");
+  }
+};
+
 export const logout = async () => {
   const { session } = await validateRequest();
   if (!session) {

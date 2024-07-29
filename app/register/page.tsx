@@ -1,4 +1,4 @@
-import { RegisterForm } from "@/components/forms/registerForm";
+import { RegisterForm } from "@/components/registerForm";
 import { validateRequest } from "@/lib/validate-request";
 import { redirect } from "next/navigation";
 
@@ -8,6 +8,7 @@ export default async function Register() {
   if (user) {
     redirect("/");
   }
+
   return (
     <div className="flex flex-col p-10 items-center space-y-5">
       <h2 className="text-2xl font-sans font-semibold text-black/75 capitalize">
