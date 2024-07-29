@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteTask, updateTask } from "@/app/(main)/actions";
+import { deleteTask, updateTask } from "@/actions/taskActions";
 import { cn } from "@/lib/utils";
 import { useRef } from "react";
 import { useFormState } from "react-dom";

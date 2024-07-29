@@ -14,11 +14,12 @@ export const lucia = new Lucia(adapter, {
     },
   },
   getUserAttributes: (attributes) => {
-    const { email, firstName, lastName } = attributes;
+    const { email, firstName, lastName, guest } = attributes;
     return {
       email,
       firstName,
       lastName,
+      guest,
     };
   },
 });
@@ -34,4 +35,5 @@ interface DatabaseUserAttributes {
   email: string;
   firstName: string;
   lastName: string;
+  guest: boolean;
 }

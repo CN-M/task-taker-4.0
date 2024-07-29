@@ -18,6 +18,7 @@ model User {
   firstName String 
   lastName String 
   password String
+  guest Boolean @default(false)
   task Task[]
   sessions Session[]
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { addTask } from "@/app/(main)/actions";
+import { addTask } from "@/actions/taskActions";
 import { useEffect, useRef } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 
@@ -19,7 +19,7 @@ export const AddTaskForm = () => {
   }, [message]);
 
   return (
-    <div className="flex flex-col p-10 space-y-5">
+    <div className="flex flex-col p-10 space-y-5 lg:w-1/3 sm:w-1/2">
       <form ref={formRef} action={action} className="flex flex-col space-y-3">
         <input
           className="border p-2 border-emerald-500 rounded-md focus:border-blue-500"
