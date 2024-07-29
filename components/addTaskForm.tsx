@@ -33,8 +33,11 @@ export const AddTaskForm = () => {
           <>
             {error
               .filter((err) => err.path === "content")
-              .map((err) => (
-                <p className="text-red-500 text-sm">{`Error: ${err.message}`}</p>
+              .map((err, idx) => (
+                <p
+                  key={idx}
+                  className="text-red-500 text-sm"
+                >{`Error: ${err.message}`}</p>
               ))}
           </>
         )}
@@ -43,8 +46,11 @@ export const AddTaskForm = () => {
           <>
             {error
               .filter((err) => err.path === "main")
-              .map((err) => (
-                <p className="text-red-500 text-sm">{`Error: ${err.message}`}</p>
+              .map((err, idx) => (
+                <p
+                  key={idx}
+                  className="text-red-500 text-sm"
+                >{`Error: ${err.message}`}</p>
               ))}
           </>
         )}

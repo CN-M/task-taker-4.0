@@ -26,8 +26,11 @@ export const LoginForm = () => {
         <>
           {error
             .filter((err) => err.path === "email")
-            .map((err) => (
-              <p className="text-red-500 text-sm">{`Error: ${err.message}`}</p>
+            .map((err, idx) => (
+              <p
+                key={idx}
+                className="text-red-500 text-sm"
+              >{`Error: ${err.message}`}</p>
             ))}
         </>
       )}
@@ -46,8 +49,11 @@ export const LoginForm = () => {
         <>
           {error
             .filter((err) => err.path === "password")
-            .map((err) => (
-              <p className="text-red-500 text-sm">{`Error: ${err.message}`}</p>
+            .map((err, idx) => (
+              <p
+                key={idx}
+                className="text-red-500 text-sm"
+              >{`Error: ${err.message}`}</p>
             ))}
         </>
       )}
@@ -56,13 +62,16 @@ export const LoginForm = () => {
         <>
           {error
             .filter((err) => err.path === "main")
-            .map((err) => (
-              <p className="text-red-500 text-sm">{`Error: ${err.message}`}</p>
+            .map((err, idx) => (
+              <p
+                key={idx}
+                className="text-red-500 text-sm"
+              >{`Error: ${err.message}`}</p>
             ))}
         </>
       )}
       <p className="text-sm">
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <Link className="text-blue-500 cursor-pointer" href={"/register"}>
           Register here
         </Link>

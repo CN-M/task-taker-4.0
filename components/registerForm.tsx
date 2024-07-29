@@ -25,8 +25,11 @@ export const RegisterForm = () => {
             <>
               {error
                 .filter((err) => err.path === "firstName")
-                .map((err) => (
-                  <p className="text-red-500 text-sm">{`Error: ${err.message}`}</p>
+                .map((err, idx) => (
+                  <p
+                    key={idx}
+                    className="text-red-500 text-sm"
+                  >{`Error: ${err.message}`}</p>
                 ))}
             </>
           )}
@@ -43,8 +46,11 @@ export const RegisterForm = () => {
             <>
               {error
                 .filter((err) => err.path === "lastName")
-                .map((err) => (
-                  <p className="text-red-500 text-sm">{`Error: ${err.message}`}</p>
+                .map((err, idx) => (
+                  <p
+                    key={idx}
+                    className="text-red-500 text-sm"
+                  >{`Error: ${err.message}`}</p>
                 ))}
             </>
           )}
@@ -63,8 +69,11 @@ export const RegisterForm = () => {
         <>
           {error
             .filter((err) => err.path === "email")
-            .map((err) => (
-              <p className="text-red-500 text-sm">{`Error: ${err.message}`}</p>
+            .map((err, idx) => (
+              <p
+                key={idx}
+                className="text-red-500 text-sm"
+              >{`Error: ${err.message}`}</p>
             ))}
         </>
       )}
@@ -81,8 +90,11 @@ export const RegisterForm = () => {
         <>
           {error
             .filter((err) => err.path === "password")
-            .map((err) => (
-              <p className="text-red-500 text-sm">{`Error: ${err.message}`}</p>
+            .map((err, idx) => (
+              <p
+                key={idx}
+                className="text-red-500 text-sm"
+              >{`Error: ${err.message}`}</p>
             ))}
         </>
       )}
@@ -91,8 +103,11 @@ export const RegisterForm = () => {
         <>
           {error
             .filter((err) => err.path === "main")
-            .map((err) => (
-              <p className="text-red-500 text-sm">{`Error: ${err.message}`}</p>
+            .map((err, idx) => (
+              <p
+                key={idx}
+                className="text-red-500 text-sm"
+              >{`Error: ${err.message}`}</p>
             ))}
         </>
       )}
