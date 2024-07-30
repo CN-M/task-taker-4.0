@@ -1,6 +1,7 @@
 import { loginAsGuest, logout } from "@/actions/authActions";
 import { validateRequest } from "@/lib/validate-request";
 import Link from "next/link";
+import { Logo } from "./Logo";
 
 export const Navbar = async () => {
   const { user } = await validateRequest();
@@ -10,8 +11,11 @@ export const Navbar = async () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0">
-            <Link href={"/"} className="text-white text-2xl font-bold">
+            {/* <Link href={"/"} className="text-white text-2xl font-bold">
               Task Taker
+            </Link> */}
+            <Link href={`/`}>
+              <Logo />
             </Link>
           </div>
           <div className="flex space-x-4 items-center">

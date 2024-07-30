@@ -12,6 +12,10 @@ type TaskType = {
   authorId: string;
 };
 
+type Message = {
+  message: string;
+};
+
 export const Task = ({
   task: { id, content, completed },
 }: {

@@ -1,3 +1,14 @@
+@import "@fontsource/roboto";
+@import "@fontsource/lora";
+@import "@fontsource/merriweather";
+@import "@fontsource/open-sans";
+@import "@fontsource/oswald";
+@import "@fontsource/playfair-display";
+@import "@fontsource/raleway";
+@import "@fontsource/source-sans-pro";
+@import "@fontsource/source-serif-pro";
+@import "@fontsource/work-sans";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
